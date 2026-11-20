@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0a0a0a">
+<title>N1 Judge Exam · Neuroscape at NRG Events</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin:0; padding:0; background:#0a0a0a; }
+  ::selection { background:#ff6b1a; color:#0a0a0a; }
+  a { color:#ff6b1a; text-decoration:none; }
+  a:hover { color:#ffa366; }
+  button { font-family:'JetBrains Mono', ui-monospace, monospace; }
+</style>
+</helmet>
+<div style="min-height:100vh;background-color:#0a0a0a;background-image:radial-gradient(ellipse 900px 420px at 50% -120px,rgba(255,107,26,.16),transparent 70%),url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='69.28' viewBox='0 0 40 69.28'%3E%3Cpath d='M20 0 L40 11.547 L40 34.64 L20 46.188 L0 34.64 L0 11.547 Z M20 46.188 L20 69.28 M0 69.28 L0 80 M40 69.28 L40 80' fill='none' stroke='rgba(255,107,26,0.06)' stroke-width='1'/%3E%3C/svg%3E&quot;);background-size:auto,40px 69.28px;color:#d4d4d8;font-family:'JetBrains Mono', ui-monospace, monospace;padding-bottom:64px">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 28px;border-bottom:1px solid #222;background:rgba(10,10,10,.94);position:sticky;top:0;z-index:10;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <div style="background:#ff6b1a;color:#0a0a0a;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:18px;letter-spacing:.08em;padding:3px 9px 2px;line-height:1.1">NRG</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.2em;font-size:15px;color:#f4f4f5">EVENTS</div>
+      <div style="color:#52525b;font-size:13px">//</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.18em;font-size:15px;color:#ff6b1a">NEUROSCAPE JUDGE.TRAINER</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="display:flex;align-items:center;gap:8px;border:1px solid #27272a;padding:7px 12px;font-size:10px;letter-spacing:.16em;color:#a1a1aa">
+        <span style="width:7px;height:7px;border-radius:50%;background:{{ statusDot }};box-shadow:0 0 8px {{ statusDot }}"></span>{{ statusLabel }}
+      </div>
+      <div style="border:1px solid #27272a;padding:7px 12px;font-size:11px;letter-spacing:.14em;color:{{ clockColor }}">{{ clock }}</div>
+    </div>
+  </div>
+
+  <div style="max-width:980px;margin:0 auto;padding:28px 24px 0">
+
+    <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ true }}">
+      <div style="border:1px solid #27272a;background:#111;padding:48px;text-align:center;font-size:12px;letter-spacing:.2em;color:#71717a">LOADING EXAM…</div>
+    </sc-if>
+
+    <sc-if value="{{ loadError }}">
+      <div style="border:1px solid #ef4444;background:rgba(239,68,68,.07);padding:24px;font-size:12px;color:#fecaca;line-height:1.7">COULD NOT LOAD EXAM<br /><span style="color:#a1a1aa">{{ loadError }}</span></div>
+    </sc-if>
+
+    <sc-if value="{{ isSelect }}">
+      <div>
+        <div style="border:1px solid #27272a;border-top:3px solid #ff6b1a;background:#111;padding:26px 26px 24px;margin-bottom:18px">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+            <a href="{{ eventUrl }}" target="_blank" rel="noopener" style="background:#ff6b1a;color:#0a0a0a;padding:5px 10px;font-size:10px;font-weight:700;letter-spacing:.16em">{{ eventName }}</a>
+            <span style="border:1px solid #27272a;padding:5px 10px;font-size:10px;letter-spacing:.16em;color:#a1a1aa">{{ eventDates }}</span>
+            <span style="border:1px solid #27272a;padding:5px 10px;font-size:10px;letter-spacing:.16em;color:#a1a1aa">{{ eventVenue }}</span>
+          </div>
+          <div style="font-size:11px;letter-spacing:.24em;color:#ff6b1a;margin-bottom:6px">// NEUROSCAPE JUDGE TRAINER</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:52px;line-height:.95;font-weight:800;color:#f4f4f5;letter-spacing:.01em;text-transform:uppercase;margin-bottom:12px">{{ tierCode }} <span style="color:#ff6b1a">{{ tierName }}</span> Exam</div>
+          <div style="font-size:13px;color:#d4d4d8;line-height:1.7;margin-bottom:10px">{{ tierTagline }}</div>
+          <div style="font-size:12px;color:#a1a1aa;line-height:1.85;text-wrap:pretty;max-width:760px">{{ tierScope }}</div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px;margin-top:22px">
+            <div style="border:1px solid #27272a;background:#0c0c0c;padding:12px 14px">
+              <div style="font-size:9px;letter-spacing:.2em;color:#71717a;margin-bottom:6px">QUESTIONS</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:#f4f4f5">{{ totalQuestions }}</div>
+            </div>
+            <div style="border:1px solid #27272a;background:#0c0c0c;padding:12px 14px">
+              <div style="font-size:9px;letter-spacing:.2em;color:#71717a;margin-bottom:6px">TO PASS</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:#ff6b1a">{{ passPct }}</div>
+            </div>
+            <div style="border:1px solid #27272a;background:#0c0c0c;padding:12px 14px">
+              <div style="font-size:9px;letter-spacing:.2em;color:#71717a;margin-bottom:6px">FORMAT</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:#f4f4f5">{{ bookLabel }}</div>
+            </div>
+            <div style="border:1px solid #27272a;background:#0c0c0c;padding:12px 14px">
+              <div style="font-size:9px;letter-spacing:.2em;color:#71717a;margin-bottom:6px">TIME LIMIT</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:#f4f4f5">{{ timeLabel }}</div>
+            </div>
+            <div style="border:1px solid #27272a;background:#0c0c0c;padding:12px 14px">
+              <div style="font-size:9px;letter-spacing:.2em;color:#71717a;margin-bottom:6px">RULES BASE</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:#f4f4f5">{{ rulesBase }}</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px">
+            <button onClick="{{ startExam }}" style="border:1px solid #ff6b1a;background:#ff6b1a;color:#0a0a0a;padding:15px 28px;font-size:12px;font-weight:700;letter-spacing:.2em;cursor:pointer" style-hover="background:#ff8a47;border-color:#ff8a47">▸ START N1 EXAM</button>
+            <button onClick="{{ toggleSyllabus }}" style="border:1px solid #3f3f46;background:transparent;color:#a1a1aa;padding:15px 22px;font-size:11px;letter-spacing:.18em;cursor:pointer" style-hover="color:#f4f4f5;border-color:#71717a">{{ syllabusLabel }}</button>
+          </div>
+
+          <sc-if value="{{ showSyllabus }}">
+            <div style="border:1px solid #27272a;background:#0c0c0c;padding:18px 20px;margin-top:16px">
+              <div style="font-size:9px;letter-spacing:.2em;color:#71717a;margin-bottom:12px">WHAT THE N1 COVERS</div>
+              <div style="display:grid;gap:8px">
+                <sc-for list="{{ syllabus }}" as="s" hint-placeholder-count="5">
+                  <div style="display:flex;gap:10px;font-size:12px;color:#d4d4d8;line-height:1.6"><span style="color:#ff6b1a">▪</span><span>{{ s.text }}</span></div>
+                </sc-for>
+              </div>
+              <div style="margin-top:14px;font-size:11px;color:#71717a;line-height:1.7;border-left:2px solid #3f3f46;padding-left:12px">{{ tierNote }}</div>
+            </div>
+          </sc-if>
+        </div>
+
+
+        <div style="border:1px solid #222;background:#0e0e0e;padding:14px 20px;display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+          <div style="font-size:10px;letter-spacing:.2em;color:#71717a">SESSION OPTIONS</div>
+          <button onClick="{{ toggleShuffle }}" style="border:1px solid #27272a;background:transparent;color:{{ shuffleColor }};padding:8px 14px;font-size:10px;letter-spacing:.14em;cursor:pointer">{{ shuffleLabel }}</button>
+          <button onClick="{{ toggleFeedback }}" style="border:1px solid #27272a;background:transparent;color:{{ feedbackColor }};padding:8px 14px;font-size:10px;letter-spacing:.14em;cursor:pointer">{{ feedbackLabel }}</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isQuiz }}">
+      <div style="border:1px solid #27272a;background:#111">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 22px;border-bottom:1px solid #222;flex-wrap:wrap">
+          <div style="font-size:11px;letter-spacing:.16em;color:#71717a">SESSION <span style="color:#f4f4f5">{{ sessionId }}</span></div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <div style="border:1px solid #27272a;padding:6px 12px;font-size:11px;letter-spacing:.12em;color:#a1a1aa">SCORE <span style="color:#ff6b1a">{{ score }}</span> / {{ answeredCount }}</div>
+            <button onClick="{{ abort }}" style="border:1px solid #27272a;background:transparent;color:#71717a;padding:6px 12px;font-size:10px;letter-spacing:.14em;cursor:pointer" style-hover="color:#ef4444;border-color:#ef4444">▸ EXIT</button>
+          </div>
+        </div>
+
+        <div style="padding:18px 22px 0">
+          <div style="display:flex;justify-content:space-between;font-size:10px;letter-spacing:.16em;color:#71717a;margin-bottom:10px">
+            <span>QUESTION {{ qNum }} / {{ qTotal }}</span><span>{{ pctLabel }} COMPLETE</span>
+          </div>
+          <div style="height:4px;background:#222;position:relative;overflow:hidden">
+            <div style="height:100%;width:{{ pctLabel }};background:linear-gradient(90deg,#ff3d00,#ff6b1a,#ffb020)"></div>
+          </div>
+        </div>
+
+        <div style="padding:20px 22px">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+            <span style="background:#ff6b1a;color:#0a0a0a;padding:6px 11px;font-size:10px;font-weight:700;letter-spacing:.14em">{{ qId }}</span>
+            <span style="border:1px solid #27272a;padding:6px 11px;font-size:10px;letter-spacing:.14em;color:#d4d4d8">{{ qSection }}</span>
+            <sc-if value="{{ hasChanged }}">
+              <span style="border:1px solid #facc15;color:#fde047;padding:6px 11px;font-size:10px;letter-spacing:.14em">△ CHANGED RULING</span>
+            </sc-if>
+            <sc-if value="{{ hasConfirmed }}">
+              <span style="border:1px solid #34d399;color:#6ee7b7;padding:6px 11px;font-size:10px;letter-spacing:.14em">● COMMUNITY CONFIRMED</span>
+            </sc-if>
+          </div>
+
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;line-height:1.1;font-weight:700;color:#f4f4f5;margin-bottom:16px;text-wrap:pretty">{{ qTitle }}</div>
+
+          <sc-if value="{{ hasCards }}">
+            <div style="border-left:3px solid #ff6b1a;background:#0c0c0c;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#d4d4d8;line-height:1.6">
+              <span style="color:#ff6b1a;letter-spacing:.14em;font-size:10px;margin-right:10px">CARDS</span>{{ qCards }}
+              <sc-if value="{{ hasCardImgs }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+                  <sc-for list="{{ cardImgs }}" as="ci" hint-placeholder-count="0">
+                    <button onClick="{{ ci.onZoom }}" style="border:1px solid #27272a;background:#0a0a0a;padding:4px;cursor:zoom-in;display:flex;flex-direction:column;gap:6px;align-items:center" style-hover="border-color:#ff6b1a">
+                      <img src="{{ ci.src }}" alt="{{ ci.name }}" style="width:120px;aspect-ratio:535/749;object-fit:cover;display:block;border-radius:5px" />
+                      <span style="font-size:9px;letter-spacing:.12em;color:#a1a1aa;padding-bottom:2px">{{ ci.name }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <div style="font-size:10px;letter-spacing:.2em;color:#ff6b1a;margin-bottom:10px">▸ SITUATION</div>
+          <div style="border:1px solid #27272a;background:#0c0c0c;padding:18px 20px;font-size:14px;line-height:1.85;color:#e4e4e7;margin-bottom:20px;text-wrap:pretty">{{ qSituation }}</div>
+
+          <div style="font-size:15px;line-height:1.7;color:#f4f4f5;font-weight:500;margin-bottom:16px;text-wrap:pretty">{{ qQuestion }}</div>
+
+          <div style="display:grid;gap:8px">
+            <sc-for list="{{ options }}" as="opt" hint-placeholder-count="4">
+              <button onClick="{{ opt.onPick }}" style="{{ opt.style }}">
+                <span style="{{ opt.badge }}">{{ opt.letter }}</span>
+                <span style="flex:1;min-width:0">{{ opt.text }}</span>
+                <span style="color:{{ opt.markColor }};font-size:13px">{{ opt.mark }}</span>
+              </button>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ showRuling }}">
+            <div style="margin-top:20px;border:1px solid {{ verdictColor }};background:{{ verdictBg }};padding:18px 20px">
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;letter-spacing:.06em;color:{{ verdictColor }};margin-bottom:12px">{{ verdictLabel }}</div>
+              <div style="font-size:13.5px;line-height:1.85;color:#e4e4e7;text-wrap:pretty">{{ qExplanation }}</div>
+              <sc-if value="{{ hasChanged }}">
+                <div style="margin-top:14px;border-left:3px solid #facc15;padding-left:14px;font-size:12px;line-height:1.75;color:#fef08a">
+                  <span style="font-size:10px;letter-spacing:.16em;color:#facc15;display:block;margin-bottom:5px">△ CHANGED FROM PRIOR RULES</span>{{ qChanged }}
+                </div>
+              </sc-if>
+              <sc-if value="{{ hasConfirmed }}">
+                <div style="margin-top:14px;border-left:3px solid #34d399;padding-left:14px;font-size:12px;line-height:1.75;color:#9decc4">
+                  <span style="font-size:10px;letter-spacing:.16em;color:#34d399;display:block;margin-bottom:5px">● CONFIRMED</span>{{ qConfirmed }}
+                </div>
+              </sc-if>
+              <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                <span style="font-size:10px;letter-spacing:.16em;color:#71717a;margin-right:4px">CR</span>
+                <sc-for list="{{ citations }}" as="c" hint-placeholder-count="3">
+                  <span style="border:1px solid #27272a;background:#0a0a0a;padding:5px 10px;font-size:11px;color:#a1a1aa">{{ c.text }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <button onClick="{{ primaryAction }}" style="margin-top:20px;width:100%;border:1px solid #ff6b1a;background:{{ primaryBg }};color:{{ primaryColor }};padding:16px;font-size:12px;font-weight:700;letter-spacing:.2em;cursor:{{ primaryCursor }};opacity:{{ primaryOpacity }}" style-hover="background:#ff8a47;color:#0a0a0a">{{ primaryLabel }}</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isResults }}">
+      <div>
+        <div style="border:1px solid #27272a;border-top:3px solid {{ verdictColor }};background:#111;padding:28px 24px;margin-bottom:18px">
+          <div style="font-size:10px;letter-spacing:.24em;color:#71717a;margin-bottom:10px">{{ resultTier }} EXAM COMPLETE · {{ eventName }}</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:58px;line-height:1;font-weight:800;color:{{ verdictColor }};letter-spacing:.03em">{{ verdictLabel }}</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px;margin-top:22px">
+            <div style="border:1px solid #27272a;background:#0c0c0c;padding:12px 14px">
+              <div style="font-size:9px;letter-spacing:.2em;color:#71717a;margin-bottom:6px">SCORE</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:#f4f4f5">{{ scoreLine }}</div>
+            </div>
+            <div style="border:1px solid #27272a;background:#0c0c0c;padding:12px 14px">
+              <div style="font-size:9px;letter-spacing:.2em;color:#71717a;margin-bottom:6px">RESULT</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:{{ verdictColor }}">{{ pctScore }}</div>
+            </div>
+            <div style="border:1px solid #27272a;background:#0c0c0c;padding:12px 14px">
+              <div style="font-size:9px;letter-spacing:.2em;color:#71717a;margin-bottom:6px">REQUIRED</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:#f4f4f5">{{ requiredPct }}</div>
+            </div>
+            <div style="border:1px solid #27272a;background:#0c0c0c;padding:12px 14px">
+              <div style="font-size:9px;letter-spacing:.2em;color:#71717a;margin-bottom:6px">TIME</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:#f4f4f5">{{ finalTime }}</div>
+            </div>
+            <div style="border:1px solid #27272a;background:#0c0c0c;padding:12px 14px">
+              <div style="font-size:9px;letter-spacing:.2em;color:#71717a;margin-bottom:6px">SESSION</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:#f4f4f5;padding-top:4px">{{ sessionId }}</div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:#71717a;letter-spacing:.08em;margin-top:12px">COMPLETED {{ completedAt }}</div>
+          <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+            <button onClick="{{ retake }}" style="border:1px solid #ff6b1a;background:#ff6b1a;color:#0a0a0a;padding:12px 20px;font-size:11px;font-weight:700;letter-spacing:.18em;cursor:pointer" style-hover="background:#ff8a47">▸ RETAKE</button>
+            <button onClick="{{ backToStart }}" style="border:1px solid #3f3f46;background:transparent;color:#a1a1aa;padding:12px 20px;font-size:11px;letter-spacing:.18em;cursor:pointer" style-hover="color:#f4f4f5;border-color:#71717a">▸ BACK TO START</button>
+          </div>
+        </div>
+
+        <div style="font-size:10px;letter-spacing:.24em;color:#71717a;margin:0 0 12px">▸ REVIEW · {{ reviewLabel }}</div>
+        <div style="display:grid;gap:8px">
+          <sc-for list="{{ review }}" as="r" hint-placeholder-count="4">
+            <div style="border:1px solid #27272a;border-left:3px solid {{ r.color }};background:#111;padding:16px 18px">
+              <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
+                <span style="font-size:10px;letter-spacing:.14em;color:{{ r.color }}">{{ r.mark }} {{ r.id }}</span>
+                <span style="font-size:10px;letter-spacing:.14em;color:#71717a">{{ r.section }}</span>
+              </div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;color:#f4f4f5;margin-bottom:8px">{{ r.title }}</div>
+              <div style="font-size:12px;color:#a1a1aa;line-height:1.7;margin-bottom:6px">YOUR ANSWER · {{ r.yours }}</div>
+              <div style="font-size:12px;color:#6ee7b7;line-height:1.7;margin-bottom:10px">CORRECT · {{ r.right }}</div>
+              <div style="font-size:12.5px;color:#d4d4d8;line-height:1.8;text-wrap:pretty">{{ r.explanation }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+  </div>
+
+  <sc-if value="{{ hasZoom }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeZoom }}" style="position:fixed;inset:0;z-index:50;background:rgba(5,5,5,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;cursor:zoom-out">
+      <img src="{{ zoomSrc }}" alt="{{ zoomName }}" style="max-height:82vh;max-width:92vw;aspect-ratio:535/749;border-radius:14px;box-shadow:0 0 40px rgba(255,107,26,.3)" />
+      <div style="font-size:10px;letter-spacing:.2em;color:#71717a">{{ zoomName }} · CLICK ANYWHERE TO CLOSE</div>
+    </div>
+  </sc-if>
+
+  <div style="max-width:980px;margin:40px auto 0;padding:0 24px;text-align:center;font-size:10px;letter-spacing:.18em;line-height:2;color:#52525b">// {{ footerBank }} ◇ COMMUNITY STUDY MATERIAL ◇ NOT AFFILIATED WITH OR ENDORSED BY THE CREATORS OF NEUROSCAPE TCG</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:860}}">
+// ── Event settings: edit these for a different NRG event ──────────────────────
+const EVENT = {
+  name: 'NRG EVENTS ELMHURST',
+  dates: 'NOV 21–22, 2026',
+  venue: 'ELMHURST, IL',
+  url: 'https://www.nrgevents.gg/conventions/nrgevents-elmhurst'
+};
+// ─────────────────────────────────────────────────────────────────────────────
+const DATA_URL = 'data/n1_quiz.json';
+const CARD_DIR = 'cards/';
+const CARD_FILES = ['ACPD Drones','Admin','BOARDROOM','DELETE','GOKUDO SILENCER','HACKATHON','NEOSEC FIRESTORM'];
+
+class Component extends DCLogic {
+  state = {
+    data: null, loadError: null, view: 'select', qs: [], i: 0,
+    picked: null, revealed: false, answers: {}, elapsed: 0, showSyllabus: false,
+    shuffle: true, instant: true, session: 'NRG-N1', completedAt: ''
+  };
+
+  componentDidMount() {
+    fetch(DATA_URL)
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(d => this.setState({ data: d }))
+      .catch(e => this.setState({ loadError: e.message }));
+    this.timer = setInterval(() => {
+      if (this.state.view === 'quiz') this.setState(s => ({ elapsed: s.elapsed + 1 }));
+    }, 1000);
+  }
+  componentWillUnmount() { clearInterval(this.timer); }
+
+  fmt(sec) {
+    const h = String(Math.floor(sec / 3600)).padStart(2, '0');
+    const m = String(Math.floor(sec / 60) % 60).padStart(2, '0');
+    const s = String(sec % 60).padStart(2, '0');
+    return h + ':' + m + ':' + s;
+  }
+
+  tier() { return this.state.data ? this.state.data.tiers[0] : null; }
+
+  start() {
+    const t = this.tier();
+    let qs = this.state.data.questions.filter(q => q.tier === t.id);
+    if (this.state.shuffle) qs = qs.map(q => [Math.random(), q]).sort((a, b) => a[0] - b[0]).map(p => p[1]);
+    this.setState({
+      view: 'quiz', qs, i: 0, picked: null, revealed: false, answers: {}, elapsed: 0,
+      session: 'NRG-N1-' + String(Math.floor(Math.random() * 9000) + 1000)
+    });
+    window.scrollTo(0, 0);
+  }
+
+  pick(id) { if (this.state.revealed) return; this.setState({ picked: id }); }
+
+  advance() {
+    const s = this.state;
+    if (!s.picked) return;
+    if (s.instant && !s.revealed) { this.setState({ revealed: true }); return; }
+    const q = s.qs[s.i];
+    const answers = Object.assign({}, s.answers, { [q.id]: s.picked });
+    if (s.i + 1 >= s.qs.length) {
+      const now = new Date();
+      this.setState({ answers, view: 'results', completedAt: now.toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }).toUpperCase() });
+    } else this.setState({ answers, i: s.i + 1, picked: null, revealed: false });
+    window.scrollTo(0, 0);
+  }
+
+  renderVals() {
+    const s = this.state, d = s.data;
+    const v = {
+      isLoading: !d && !s.loadError, loadError: s.loadError,
+      isSelect: !!d && s.view === 'select', isQuiz: !!d && s.view === 'quiz', isResults: !!d && s.view === 'results',
+      eventName: EVENT.name, eventDates: EVENT.dates, eventVenue: EVENT.venue, eventUrl: EVENT.url,
+      clock: this.fmt(s.elapsed), clockColor: s.view === 'quiz' ? '#ff6b1a' : '#a1a1aa',
+      statusLabel: s.view === 'quiz' ? 'EXAM ACTIVE' : s.view === 'results' ? 'EXAM CLOSED' : 'STANDBY',
+      statusDot: s.view === 'quiz' ? '#ff6b1a' : '#34d399',
+      toggleShuffle: () => this.setState(p => ({ shuffle: !p.shuffle })),
+      toggleFeedback: () => this.setState(p => ({ instant: !p.instant })),
+      toggleSyllabus: () => this.setState(p => ({ showSyllabus: !p.showSyllabus })),
+      showSyllabus: s.showSyllabus,
+      syllabusLabel: s.showSyllabus ? '▾ HIDE SYLLABUS' : '▸ SYLLABUS',
+      shuffleLabel: s.shuffle ? '☑ SHUFFLE ORDER' : '☐ SHUFFLE ORDER',
+      feedbackLabel: s.instant ? '☑ INSTANT RULING' : '☐ INSTANT RULING (REVEAL AT END)',
+      shuffleColor: s.shuffle ? '#ff6b1a' : '#71717a',
+      feedbackColor: s.instant ? '#ff6b1a' : '#71717a',
+      hasZoom: !!s.zoom, zoomSrc: s.zoom ? CARD_DIR + s.zoom + '.avif' : '', zoomName: (s.zoom || '').toUpperCase(),
+      closeZoom: () => this.setState({ zoom: null }),
+      backToStart: () => this.setState({ view: 'select', elapsed: 0 }),
+      abort: () => this.setState({ view: 'select', elapsed: 0 }),
+      startExam: () => this.start(),
+      sessionId: s.session, completedAt: s.completedAt,
+      footerBank: 'N1 EXAM'
+    };
+    if (!d) return v;
+
+    const t = this.tier();
+    v.footerBank = 'QUIZ BANK v' + d.meta.version + ' · ' + d.meta.date.toUpperCase();
+    v.tierCode = t.code; v.tierName = t.name; v.tierTagline = t.tagline; v.tierScope = t.scope; v.tierNote = t.exam.note;
+    v.syllabus = t.syllabus.map(x => ({ text: x }));
+    v.totalQuestions = d.questions.length;
+    v.passPct = t.exam.pass_pct + '%';
+    v.bookLabel = t.exam.open_book ? 'OPEN BOOK' : 'CLOSED BOOK';
+    v.timeLabel = t.exam.timed ? 'TIMED' : 'UNTIMED';
+    v.rulesBase = (d.meta.source_rules.match(/Comprehensive Rules v[\d.]+/) || ['CR'])[0].replace('Comprehensive Rules ', 'CR ');
+
+    const correctCount = Object.keys(s.answers).filter(id => {
+      const q = d.questions.find(x => x.id === id); return q && q.correct === s.answers[id];
+    }).length;
+
+    if (s.view === 'quiz' && s.qs.length) {
+      const q = s.qs[s.i];
+      const revealed = s.revealed;
+      v.score = correctCount;
+      v.answeredCount = Object.keys(s.answers).length;
+      v.qNum = s.i + 1; v.qTotal = s.qs.length;
+      v.pctLabel = Math.round((s.i / s.qs.length) * 100) + '%';
+      v.qId = q.id; v.qSection = q.section.toUpperCase(); v.qTitle = q.title;
+      v.qSituation = q.situation; v.qQuestion = q.question; v.qExplanation = q.explanation;
+      const hay = ((q.cards || '') + ' ' + q.situation).toLowerCase();
+      const imgs = CARD_FILES.filter(n => hay.includes(n.toLowerCase())).map(n => ({
+        name: n.toUpperCase(), src: CARD_DIR + n + '.avif',
+        onZoom: () => this.setState({ zoom: n })
+      }));
+      v.cardImgs = imgs; v.hasCardImgs = imgs.length > 0;
+      v.hasCards = !!q.cards || imgs.length > 0; v.qCards = q.cards || '';
+      v.hasChanged = revealed && !!q.changed; v.qChanged = q.changed || '';
+      v.hasConfirmed = revealed && !!q.confirmed; v.qConfirmed = q.confirmed || '';
+      v.citations = (q.citations || []).map(c => ({ text: c }));
+      v.showRuling = revealed;
+      const right = s.picked === q.correct;
+      v.verdictColor = right ? '#34d399' : '#ef4444';
+      v.verdictBg = right ? 'rgba(52,211,153,.06)' : 'rgba(239,68,68,.06)';
+      v.verdictLabel = right ? '✓ CORRECT RULING' : '✕ INCORRECT RULING';
+
+      const base = 'display:flex;gap:14px;align-items:flex-start;text-align:left;width:100%;padding:14px 16px;font-size:13.5px;line-height:1.65;cursor:pointer;transition:border-color .12s,background .12s;';
+      v.options = q.options.map(o => {
+        const sel = s.picked === o.id;
+        let border = '#27272a', bg = '#0c0c0c', color = '#d4d4d8', opacity = 1, mark = '', markColor = 'transparent';
+        if (!revealed && sel) { border = '#ff6b1a'; bg = 'rgba(255,107,26,.1)'; color = '#f4f4f5'; }
+        if (revealed) {
+          if (o.id === q.correct) { border = '#34d399'; bg = 'rgba(52,211,153,.09)'; color = '#e3fbef'; mark = '✓'; markColor = '#34d399'; }
+          else if (sel) { border = '#ef4444'; bg = 'rgba(239,68,68,.09)'; color = '#fee2e2'; mark = '✕'; markColor = '#ef4444'; }
+          else { opacity = .4; }
+        }
+        return {
+          letter: o.id.toUpperCase(), text: o.text, mark, markColor,
+          style: base + 'border:1px solid ' + border + ';background:' + bg + ';color:' + color + ';opacity:' + opacity + ';cursor:' + (revealed ? 'default' : 'pointer') + ';',
+          badge: 'flex:0 0 auto;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border:1px solid ' + border + ';font-size:11px;font-weight:700;color:' + (sel || (revealed && o.id === q.correct) ? color : '#71717a') + ';',
+          onPick: () => this.pick(o.id)
+        };
+      });
+
+      const last = s.i + 1 >= s.qs.length;
+      v.primaryLabel = !s.picked ? '▸ SELECT AN ANSWER'
+        : (s.instant && !revealed) ? '▸ DELIVER RULING'
+        : last ? '▸ FINISH EXAM' : '▸ NEXT QUESTION';
+      v.primaryCursor = s.picked ? 'pointer' : 'not-allowed';
+      v.primaryOpacity = s.picked ? '1' : '.4';
+      v.primaryBg = s.picked ? '#ff6b1a' : 'transparent';
+      v.primaryColor = s.picked ? '#0a0a0a' : '#ff6b1a';
+      v.primaryAction = () => this.advance();
+    }
+
+    if (s.view === 'results') {
+      const total = s.qs.length;
+      const pct = total ? Math.round((correctCount / total) * 100) : 0;
+      const passed = pct >= t.exam.pass_pct;
+      v.resultTier = t.code + ' · ' + t.name.toUpperCase();
+      v.verdictColor = passed ? '#34d399' : '#ef4444';
+      v.verdictLabel = passed ? 'CERTIFIED' : 'NOT CERTIFIED';
+      v.scoreLine = correctCount + ' / ' + total;
+      v.pctScore = pct + '%';
+      v.requiredPct = t.exam.pass_pct + '%';
+      v.finalTime = this.fmt(s.elapsed);
+      const missed = s.qs.filter(q => s.answers[q.id] !== q.correct);
+      v.reviewLabel = missed.length ? missed.length + ' MISSED' : 'PERFECT SCORE — FULL LOG';
+      const list = missed.length ? missed : s.qs;
+      v.review = list.map(q => {
+        const ok = s.answers[q.id] === q.correct;
+        const yours = (q.options.find(o => o.id === s.answers[q.id]) || {}).text || 'No answer';
+        return {
+          id: q.id, section: q.section.toUpperCase(), title: q.title, explanation: q.explanation,
+          yours: (s.answers[q.id] || '—').toUpperCase() + '. ' + yours,
+          right: q.correct.toUpperCase() + '. ' + q.options.find(o => o.id === q.correct).text,
+          color: ok ? '#34d399' : '#ef4444', mark: ok ? '✓' : '✕'
+        };
+      });
+      v.retake = () => this.start();
+    }
+
+    return v;
+  }
+}
+</script>
+</body>
+</html>
