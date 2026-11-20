@@ -1,0 +1,34 @@
+NEUROSCAPE JUDGE TRAINER, NRG EVENTS EDITION: CHANGE LOG
+Community created. Not affiliated with or endorsed by the creators of Neuroscape TCG.
+
+This log records what changed on this page and in its N1 question set, and why. It is
+not linked from the quiz page and it deliberately does not state correct answers, so it
+can't be used as an answer key. If you need the ruling itself, take the question.
+
+
+NRG EDITION
+
+v1.0  (November 20, 2026)
+  First release, made for NRG Events Elmhurst (November 21 and 22, 2026).
+  Built from the main Neuroscape Judge Trainer, quiz bank v4.2.
+  Only the N1 Store Judge exam is included: 24 questions, closed book, untimed,
+  70% to pass. N2 and N3 questions are not part of this site.
+  Themed to match NRG Events (black and orange) with the hex background kept
+  from the main site.
+  Results screen shows a session code and completion time so a score can be
+  checked in person.
+
+
+N1 QUESTION HISTORY (carried over from the main quiz bank)
+
+v4.2  (October 26, 2026)
+  Titles changed on N1-12 and N1-13 because the old ones gave the answer away.
+  Question content is unchanged.
+
+v4.0.2  (October 24, 2026)
+  N1-14  Situation and explanation rewritten for accuracy.
+  N1-06  Ruling corrected under CR 114.2a. Answer letter balance kept.
+
+v4.0  (September 2026)
+  Bank updated to Comprehensive Rules v1.1 (effective September 10, 2026).
+  N1-23 and N1-24 added.
